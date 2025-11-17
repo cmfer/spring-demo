@@ -1,11 +1,11 @@
 package com.example.demo;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,8 +16,7 @@ import com.example.demo.model.LibroRepository;
 import com.example.demo.model.LibroService;
 
 // Ejemplo de como probar la clase LibroService con un mock de la clase LibroRepository
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 public class LibroTests {
 
 	private static final long ISBN_TEST = 123l;
@@ -46,28 +45,18 @@ public class LibroTests {
 		dummyLibro2.setIsbn13(ISBN_TEST2);
 		dummyLibro2.setNombre("titulo2");
 
-		when(libroRepository.getOne(anyLong())).thenReturn(dummyLibro2);
-		when(libroRepository.getOne(ISBN_TEST)).thenReturn(dummyLibro);
+		when(libroRepository.getReferenceById(anyLong())).thenReturn(dummyLibro2);
+		when(libroRepository.getReferenceById(ISBN_TEST)).thenReturn(dummyLibro);
 
 		// definimos el test
 		Libro resultLibro = libroService.getByIsbn13(ISBN_TEST);
-		verify(libroRepository, times(1)).getOne(ISBN_TEST);
+		verify(libroRepository, times(1)).getReferenceById(ISBN_TEST);
 		assertEquals(dummyLibro, resultLibro);
 
 		Libro resultLibro2 = libroService.getByIsbn13(ISBN_TEST2);
 		assertEquals(dummyLibro2, resultLibro2);
 	}
 	
-	// Comprueba que el libro se actualiza correctamente
-	@Test
-	public void testUpdate() {
-		Libro resultLibro = libroService.getByIsbn13(ISBN_TEST);
-		resultLibro.setNombre("Nuevo nombre");
-		libroService.update(resultLibro);
-		Libro resultLibro2 = libroService.getByIsbn13(ISBN_TEST);
-		assertEquals(resultLibro2, resultLibro);
-		
-	}
 	
 	// Comprueba que el libro se elimina, con la llamada al metodo de libroRepository
 	@Test

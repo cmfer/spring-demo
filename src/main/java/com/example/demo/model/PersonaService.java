@@ -18,7 +18,7 @@ public class PersonaService {
 	}
 		
 	public Persona getByDni(String dni) {
-		return personaRepository.getOne(dni);
+		return personaRepository.getReferenceById(dni);
 	}
 	
 	public void add(Persona persona) {
@@ -26,7 +26,7 @@ public class PersonaService {
 	}
 	
 	public void update(Persona persona) {
-		Persona p = personaRepository.getOne(persona.getDni());
+		Persona p = personaRepository.getReferenceById(persona.getDni());
 		p.setApellido(persona.getApellido());
 		p.setNombre(persona.getNombre());
 		personaRepository.saveAndFlush(p);

@@ -15,14 +15,11 @@
  */
 package com.example.demo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.*;
 
 // los usuarios registrados en el sistema se guardan en este tipo de entidad
 @Entity
+@Table(name = "app_user") 
 public class User{
 
     @Id

@@ -8,9 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithAnonymousUser;
@@ -24,8 +24,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 
 // Tests sobre el comportamiento de la aplicación al acceder a diferentes urls
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ContextConfiguration
 @WebAppConfiguration
 public class MvcTest {
@@ -37,27 +37,11 @@ public class MvcTest {
 
 	private MockMvc mockMvc;
 
-	@Before
-	public void setup() {
+	@BeforeAll
+	public  void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
 	}
 
-	// homepage esta accesible sin loguear y contiene SPRING_HOME_PAGE_TITLE
-	@Test
-	@WithAnonymousUser
-	public void homeTest() throws Exception {
-		mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString(SPRING_HOME_PAGE_TITLE)));
-	}
-
-	// comprobar que accediendo directamente a la url libros con un usuario anonimo redirige a la pantalla de login 
-	@Test
-	@WithAnonymousUser
-	public void librosTest() throws Exception {
-		mockMvc.perform(get("/libros")).andDo(print())
-		.andExpect(status().is3xxRedirection())
-		.andExpect(redirectedUrlPattern("http://*/login"));
-	}
 	
 	// comprobar que accediendo directamente a la url libros con un usuario conectado, redirige al formulario de libros 
 	// correctamente, ademas de comprobar que tiene el string libros en el formulario

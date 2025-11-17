@@ -18,7 +18,7 @@ public class LibroService {
 
 	/*---Actualiza un libro---*/
 	public void update(Libro libro) {
-		Libro l = repository.getOne(libro.getIsbn13());
+		Libro l = repository.getReferenceById(libro.getIsbn13());
 		l.setEditor(libro.getEditor());
 		l.setAutor(libro.getAutor());
 		l.setNombre(libro.getNombre());
@@ -27,7 +27,7 @@ public class LibroService {
 	}
 
 	public Libro getByIsbn13(long isbn13) {
-		return repository.getOne(isbn13);
+		return repository.getReferenceById(isbn13);
 	}
 	
 	public Libro getByName(String name) {

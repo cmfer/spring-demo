@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +54,7 @@ public class LibroController {
 	/*---Anade un nuevo libro al sistema y vuelve a la pantalla de consulta de libros---*/
 	// petición recibida por post
 	@PostMapping("/libros")
-	public String save(@Valid Libro libro, BindingResult result, Model model) {
+	public String save(@Validated Libro libro, BindingResult result, Model model) {
 		try {
 			libroService.add(libro);
 			model.addAttribute("create", true);
@@ -68,7 +67,7 @@ public class LibroController {
 	/*---Actualiza un libro del sistema y vuelve a la pantalla de consulta de libros---*/
 	// petición recibida por post
 	@PostMapping("/libros/update")
-	public String update(@Valid Libro libro, Model model) {
+	public String update(@Validated Libro libro, Model model) {
 		try {
 			libroService.add(libro);
 			model.addAttribute("udpate", true);

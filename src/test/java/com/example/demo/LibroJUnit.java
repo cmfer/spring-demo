@@ -1,9 +1,10 @@
 package com.example.demo;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import com.example.demo.model.Libro;
 import com.example.demo.model.Persona;
@@ -13,6 +14,7 @@ import com.example.demo.model.Persona;
  * @author Cristian
  *
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class LibroJUnit {
 	
 	public static Libro l;
@@ -24,7 +26,7 @@ public class LibroJUnit {
 	public static String apellidoPersona="Software";
 	public static String dniPersona="11111X";
 	
-	@BeforeClass
+	@BeforeAll
 	public static void create_libro() {
 		l=new Libro();
 		l.setNombre(nombre);
@@ -40,25 +42,25 @@ public class LibroJUnit {
 	
 	@Test
 	public void libro() {
-		assertEquals("Comprobando el nombre del libro",nombre,l.getNombre());
-		assertEquals("Comprobando el isbn del libro",isbn,l.getIsbn13());
-		assertEquals("Comprobando el precio del libro", precio, l.getPrecio());
+		assertEquals(nombre,l.getNombre(), "Comprobando el nombre del libro");
+		assertEquals(isbn,l.getIsbn13(), "Comprobando el isbn del libro");
+		assertEquals( precio, l.getPrecio(), "Comprobando el precio del libro");
 		
 	}
 	
 	@Test
 	public void autor() {
-		assertEquals("Comprobando el nombre del autor",nombrePersona,l.getAutor().getNombre());
-		assertEquals("Comprobando el apellido del autor",apellidoPersona,l.getAutor().getApellido());
-		assertEquals("Comprobando el dni del autor", dniPersona, l.getAutor().getDni());
+		assertEquals(nombrePersona,l.getAutor().getNombre(), "Comprobando el nombre del autor");
+		assertEquals(apellidoPersona,l.getAutor().getApellido(), "Comprobando el apellido del autor");
+		assertEquals(dniPersona, l.getAutor().getDni(), "Comprobando el dni del autor" );
 		
 	}
 	
 	@Test
 	public void editor() {
-		assertEquals("Comprobando el nombre del editor",nombrePersona,l.getEditor().getNombre());
-		assertEquals("Comprobando el apellido del editor",apellidoPersona,l.getEditor().getApellido());
-		assertEquals("Comprobando el dni del editor", dniPersona, l.getEditor().getDni());
+		assertEquals(nombrePersona,l.getEditor().getNombre(), "Comprobando el nombre del editor");
+		assertEquals(apellidoPersona,l.getEditor().getApellido(), "Comprobando el apellido del editor");
+		assertEquals(dniPersona, l.getEditor().getDni(), "Comprobando el dni del editor");
 		
 	}
 }
